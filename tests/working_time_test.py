@@ -18,6 +18,12 @@ def test_calculate_working_time():
     assert service.working_time(datetime(2020, 3, 5, 7, 43), datetime(2020, 3, 5, 8, 12)) == timedelta(hours = 0, minutes = 12)
     assert service.working_time(datetime(2020, 3, 1, 13, 48), datetime(2020, 4, 1, 16, 11)) == timedelta(hours = 206, minutes = 11)
     assert service.working_time(datetime(2020, 3, 5, 9, 45), datetime(2020, 3, 6, 15, 22)) == timedelta(hours = 14, minutes = 37)
+    assert service.working_time(datetime(2020, 1, 1, 0, 0), datetime(2020, 1, 1, 23, 59)) == timedelta(hours = 0, minutes = 0)
+    assert service.working_time(datetime(2020, 1, 1, 0, 0), datetime(2020, 1, 2, 7, 0)) == timedelta(hours = 0, minutes = 0)
+    assert service.working_time(datetime(2020, 1, 1, 0, 0), datetime(2020, 1, 1, 7, 59)) == timedelta(hours = 0, minutes = 0)
+    assert service.working_time(datetime(2020, 1, 1, 17, 0), datetime(2020, 1, 1, 23, 59)) == timedelta(hours = 0, minutes = 0)
+    assert service.working_time(datetime(2020, 1, 1, 17, 0), datetime(2020, 1, 2, 8, 0)) == timedelta(hours = 0, minutes = 0)
+    assert service.working_time(datetime(2020, 3, 6, 12, 0), datetime(2020, 3, 8, 9, 30)) == timedelta(hours = 5, minutes = 0)
 
 def test_weekend():
     assert service.is_weekend(date(2020, 3, 1)) # Sunday

@@ -12,10 +12,13 @@ class WorkingTime:
     # computate the working time (INITIAL_WORKING_HOUR to FINAL_WORKING_HOUR) between the two dates
     # returns a timedelta of the difference
     def working_time(self, initial_date, final_date):
+        # check if it's the same day
+        same_day = initial_date.date() == final_date.date()
+
         # sets the initial working date
-        begin = initial_date if self.working_day(initial_date) else self.next_working_day(initial_date)
+        begin = initial_date if self.working_day(initial_date) or same_day else self.next_working_day(initial_date)
         # sets the final working date
-        end = final_date if self.working_day(final_date) else self.next_working_day(final_date)
+        end = final_date if self.working_day(final_date) or same_day else self.next_working_day(final_date)
         # sets the current date
         current_day = begin
 
@@ -37,9 +40,12 @@ class WorkingTime:
         # initialize var
         time_spent = timedelta()
 
-        # if had started and ended on the same day
-        if initial_date.date() == final_date.date():
-            time_spent += end - begin
+        # if had started and ended on the same day (the original or the working dates)
+        if same_day or begin.date() == end.date():
+            # only compute time if it's a working day and time
+            if self.working_day(begin) and end > begin:
+                time_spent += end - begin
+
             return time_spent
         else:
             # calculate the time spent on first day
@@ -56,7 +62,7 @@ class WorkingTime:
         if current_day.date() == end.date():
             time_spent += end - self.initial_working_time(end)
         else:
-            print('Current day is greater than the final working date, it was not supposed to happen!')
+            return timedelta()
 
         return time_spent
 
