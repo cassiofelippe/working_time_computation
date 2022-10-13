@@ -1,4 +1,4 @@
-from src.service.working_time import WorkingTime
+from service.working_time import WorkingTime
 from datetime import datetime, timedelta, date
 
 service = WorkingTime()

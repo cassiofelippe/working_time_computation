@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.service.working_time import WorkingTime
+from service.working_time import WorkingTime
 
 service = WorkingTime()
 
