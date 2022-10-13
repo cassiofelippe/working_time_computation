@@ -1,17 +1,19 @@
 from datetime import datetime, timedelta, time
 import holidays
 
-WORKING_HOURS_PER_DAY = 9
 INITIAL_WORKING_HOUR = 8
 INITIAL_WORKING_MINUTE = 0
 FINAL_WORKING_HOUR = 17
 FINAL_WORKING_MINUTE = 0
+WORKING_HOURS_PER_DAY = FINAL_WORKING_HOUR - INITIAL_WORKING_HOUR
 
 class WorkingTime:
     
     # computate the working time (INITIAL_WORKING_HOUR to FINAL_WORKING_HOUR) between the two dates
     # returns a timedelta of the difference
     def working_time(self, initial_date, final_date):
+        print('>> calculating worktime between', self.humanize_date(INITIAL_WORKING_HOUR, INITIAL_WORKING_MINUTE), 'to', self.humanize_date(FINAL_WORKING_HOUR, FINAL_WORKING_MINUTE))
+
         # check if it's the same day
         same_day = initial_date.date() == final_date.date()
 
@@ -106,3 +108,7 @@ class WorkingTime:
     # returns the final working time of the day
     def final_working_time(self, date):
         return date.replace(hour = FINAL_WORKING_HOUR, minute = FINAL_WORKING_MINUTE)
+
+
+    def humanize_date(self, hour, minute):
+        return '{}:{}'.format('0' + str(hour) if hour < 10 else str(hour), '0' + str(minute) if minute < 10 else minute)
